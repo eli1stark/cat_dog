@@ -1,16 +1,8 @@
 # cat_dog
 
-A new Flutter project.
+Deep learning model to identify the image as the Cat or Dog. <br>
+Desired input: Image of the Cat or Dog.<br>
+If the image will be other than the desired input then the model will return a random result.<br>
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshots
+<img src="https://i.imgur.com/eIBpjvI.png" alt="screenshot1" width="270" height="500"> <img src="https://i.imgur.com/k7Oxwqc.png" alt="screenshot1" width="270" height="500"> <img src="https://i.imgur.com/FafbTYz.png" alt="screenshot1" width="270" height="500"> 
