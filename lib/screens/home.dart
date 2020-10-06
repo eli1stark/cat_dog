@@ -1,4 +1,9 @@
 import 'dart:io';
+import 'package:cat_dog/components/answer_text.dart';
+import 'package:cat_dog/components/default_image.dart';
+import 'package:cat_dog/components/headers.dart';
+import 'package:cat_dog/components/home_frame.dart';
+import 'package:cat_dog/styles/spacers.dart';
 import 'package:flutter/material.dart';
 import '../components/custom_button.dart';
 import 'package:tflite/tflite.dart';
@@ -17,9 +22,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    loadModel().then((value) {
-      setState(() {});
-    });
+    loadModel();
   }
 
   @override
@@ -63,96 +66,49 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF101010),
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 24.0,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 85.0,
-            ),
-            Text(
-              'TeachableMachine.com CNN',
-              style: TextStyle(
-                color: Color(0xFFEEDA28),
-                fontSize: 18.0,
-              ),
-            ),
-            SizedBox(
-              height: 6.0,
-            ),
-            Text(
-              'Detect Dogs and Cats',
-              style: TextStyle(
-                color: Color(0xFFE99600),
-                fontSize: 28.0,
-              ),
-            ),
-            SizedBox(
-              height: 40.0,
-            ),
-            Center(
-              child: loading
-                  ? Container(
-                      width: 280.0,
-                      child: Column(
-                        children: [
-                          Image.asset(
-                            'assets/dog_cat.png',
-                          ),
-                          SizedBox(
-                            height: 50.0,
-                          ),
-                        ],
+    return HomeFrame(
+      children: [
+        SpaceH85(),
+        HeaderFirst(),
+        SpaceH6(),
+        HeaderSecond(),
+        SpaceH40(),
+        Center(
+          child: loading
+              ? DefaultImage()
+              : Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 250.0,
+                        child: Image.file(_image),
                       ),
-                    )
-                  : Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 250.0,
-                            child: Image.file(_image),
-                          ),
-                          SizedBox(
-                            height: 20.0,
-                          ),
-                          _output != null
-                              ? Text(
-                                  '${_output[0]['label']}' +
-                                      ' ${(_output[0]['confidence'] * 100).toStringAsFixed(2)}%',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                  ),
-                                )
-                              : Container(),
-                          SizedBox(
-                            height: 30.0,
-                          ),
-                        ],
-                      ),
-                    ),
-            ),
-            CustomButton(
-              text: 'Take a photo',
-              onTap: pickImage,
-              source: ImageSource.camera,
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-            CustomButton(
-              text: 'Camera Roll',
-              onTap: pickImage,
-              source: ImageSource.gallery,
-            ),
-          ],
+                      SpaceH20(),
+                      _output.isNotEmpty
+                          ? AnswerText(
+                              '${_output[0]['label']}' +
+                                  ' ${(_output[0]['confidence'] * 100).toStringAsFixed(2)}%',
+                            )
+                          : AnswerText(
+                              'Unknown',
+                            ),
+                      SpaceH30(),
+                    ],
+                  ),
+                ),
         ),
-      ),
+        CustomButton(
+          text: 'Take a photo',
+          onTap: pickImage,
+          source: ImageSource.camera,
+        ),
+        SpaceH20(),
+        CustomButton(
+          text: 'Camera Roll',
+          onTap: pickImage,
+          source: ImageSource.gallery,
+        ),
+      ],
     );
   }
 }
